@@ -759,7 +759,7 @@ export default class HouseLoanCompute extends Component<any, any> {
                 bottom: isAndriod() ? 0 : keyboardHeight
               }}
             >
-              <Text className="keyboard-box-text">请输入</Text>
+              <Text className="keyboard-box-text">请输入1</Text>
               <KeyboardAwareScrollView
                 keyboardShouldPersistTaps="always"
                 enableAutomaticScroll={false}
