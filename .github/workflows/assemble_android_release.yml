@@ -76,13 +76,11 @@ jobs:
           key: ${{ runner.os }}-gradle
           restore-keys: |
             ${{ runner.os }}-gradle
-      - name: Bundle Gemfile
-        run: |
-          bundle init
       - name: Assemble Android ${{ env.BUILD_TYPE }}
         run: |
           sudo apt install -y ruby-bundler
           cd android
+          bundle init
           bundle update
           bundle exec fastlane assemble
         env:
