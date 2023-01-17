@@ -1,8 +1,38 @@
 name: Test Build
- 
+
+# 触发工作流程的事件
 on:
   push:
-    branches: [ release/* ]
+    tags: [ v*, r*, a* ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+# 工作流环境变量
+env:
+  # 应用的application_id
+  APP_ID: ${{secrets.APP_ID}}
+  # 应用名称
+  APP_NAME: Taro
+  # 打包类型
+  BUILD_TYPE: release
+  # 版本名称
+  VERSION_NAME: 1.7.4
+  # 版本号
+  VERSION_CODE: 17400
+  # 密钥库文件
+  KEYSTORE_FILE: my-release-key.keystore
+  # 密钥库口令
+  KEYSTORE_PASSWORD: ${{secrets.RELEASE_KEYSTORE_PASSWORD}}
+  # 密钥库别名
+  KEYSTORE_KEY_ALIAS: android
+  # 密钥库别名口令
+  KEYSTORE_KEY_PASSWORD: ${{secrets.RELEASE_KEYSTORE_PASSWORD}}
+  
+# on:
+#   push:
+#     branches: [ release/* ]
 #    runs-on: ubuntu-latest
 #    runs-on: macOS-latest
 
