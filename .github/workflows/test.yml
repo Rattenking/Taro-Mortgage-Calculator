@@ -29,7 +29,7 @@ env:
   KEYSTORE_KEY_ALIAS: android
   # 密钥库别名口令
   KEYSTORE_KEY_PASSWORD: ${{secrets.RELEASE_KEYSTORE_PASSWORD}}
-  
+
 # on:
 #   push:
 #     branches: [ release/* ]
@@ -58,7 +58,31 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
- 
+
+      - name: Get Yarn Cache Directory Path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Yarn
+        uses: actions/cache@v2
+        env:
+          cache-name: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install Dependencies
+        run: |
+          yarn
+      - name: Build Taro React Native Bundle
+        run: |
+          yarn build:rn --platform android
+      - name: Upload Taro React Native Bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: taro-android-bundle
+          path: ${{ github.workspace }}/android/app/src/main/assets/index.android.bundle
+          
       - name: Gradle cache
         uses: actions/cache@v1.2.0
         with:
