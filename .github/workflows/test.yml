@@ -3,23 +3,24 @@ name: Test Build
 on:
   push:
     branches: [ release/* ]
- 
-jobs:
-  publish_apps:
 #    runs-on: ubuntu-latest
-    runs-on: self-hosted
 #    runs-on: macOS-latest
- 
-    steps:
-      - uses: actions/checkout@v2
- 
-      - uses: webfactory/ssh-agent@v0.4.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
  
 #      - uses: ruby/setup-ruby@v1
 #        with:
 #          ruby-version: 2.7
+jobs:
+  publish_apps:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+ 
+      - name: SSH_PRIVATE_KEY
+        uses: webfactory/ssh-agent@v0.4.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Ruby cache
         uses: actions/cache@v1.2.0
         with:
@@ -51,7 +52,7 @@ jobs:
  
       - name: Fastlane android test
         run: bundle exec fastlane android test
-        
+
       - name: Upload Android Products
         uses: actions/upload-artifact@v2
         with:
