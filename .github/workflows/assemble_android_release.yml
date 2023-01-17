@@ -80,7 +80,6 @@ jobs:
         run: |
           sudo apt install -y ruby-bundler
           cd android
-          bundle init
           bundle update
           bundle exec fastlane assemble
         env:
