@@ -82,7 +82,6 @@ jobs:
           cd android
           bundle init
           bundle update
-          bundle update fastlane
           bundle exec fastlane assemble
         env:
           KEYSTORE_FILE: ${{ github.workspace }}/android/app/${{ env.KEYSTORE_FILE }}
