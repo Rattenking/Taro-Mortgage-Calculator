@@ -76,6 +76,9 @@ jobs:
           key: ${{ runner.os }}-gradle
           restore-keys: |
             ${{ runner.os }}-gradle
+      - name: Taro Info
+        run: |
+          taro info
       - name: Assemble Android ${{ env.BUILD_TYPE }}
         run: |
           sudo apt install -y ruby-bundler
