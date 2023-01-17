@@ -76,6 +76,10 @@ jobs:
           key: ${{ runner.os }}-gradle
           restore-keys: |
             ${{ runner.os }}-gradle
+      # 授权
+      - name: chmod gradlew
+        run: |
+          chmod +x ${{ github.workspace }}/android/gradlew
       - name: Assemble Android ${{ env.BUILD_TYPE }}
         run: |
           sudo apt install -y ruby-bundler
